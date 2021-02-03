@@ -1,7 +1,14 @@
 # Pull base image 
-From tomcat:8-jre8 
-
-# Maintainer 
-MAINTAINER "valaxytech@gmail.com" 
-COPY ./webapp.war /usr/local/tomcat/webapps
+FROM centos:latest
+MAINTAINER rahulsahu
+RUN yum install -y httpd \
+ zip \
+ unzip 
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page247/kindle.zip /var/www/html/s
+WORKDIR /var/www/html
+RUN unzip kindle.zip
+RUN cp -rvf markups-kindle/* .
+RUN rm -rf _MACOSX markups-kindle kindle.zip
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+EXPOSE 80
 
